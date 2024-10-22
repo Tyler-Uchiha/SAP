@@ -1,0 +1,114 @@
+﻿@model dynamic
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+    </head>
+    
+    <body>
+        <div class="container mb-5" style="margin-left : 35%; margin-top : 10%;">
+            <form class="form-inline w-25 input-group">
+            <input id="searchId" class="form-control w-25 border-1 border-dark" type="search" name="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+        </div>
+        
+        <div class="container border p-3 mt-4 w-75 border-1 border-dark">
+            <table class="table table-sm">
+                <tr>
+                    <th>Suspect No</th>
+                    <th>ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                </tr>
+
+                <tbody>
+                    @if (Model.Suspects_Table != null)
+                    {
+                        foreach (var thing in Model.Suspects_Table)
+                        {
+                            <tr>
+                                <td>@thing.Id</td>
+                                <td>@thing.SuspectIdNum</td>
+                                <td>@thing.First_Name</td>
+                                <td>@thing.Last_Name</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    <div class="m-5">
+        <hr />
+    </div>
+    <br />
+
+
+    <form class="container-fluid">
+        <table id="dataTable" class="table table-bordered table-responsive table-hover table-striped">
+            <thead>
+                <tr class="table-active">
+                    <th class="col">Id</th>
+                    <th class="col">Criminal Id Number</th>
+                    <th class="col">Offence Committed</th>
+                    <th class="col">Sentence</th>
+                    <th class="col">Issued At</th>
+                    <th class="col">Issued By</th>
+                    <th class="col">Issue Date</th>
+                    <th class="col">Criminal Record Id</th>
+                    <th> </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @* Suspect Details *@
+                @* Criminals Table *@
+                @if (Model != null)
+                {
+                    foreach (var thing in Model.CriminalRecords_Table)
+                    {
+                        <tr>
+                            <td>@thing.Id</td>
+                            <td>@thing.CriminalIdNum</td>
+                            <td>@thing.OffenceCommitted</td>
+                            <td>@thing.Sentence</td>
+                            <td>@thing.IssuedAt</td>
+                            <td>@thing.IssuedBy</td>
+                            <td>@thing.IssueDate</td>
+                            <td>@thing.CriminalRecordId</td>
+
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <a asp-controller="AddCriminalRec" asp-action="Edit" asp-route-id="@thing.Id"
+                                       asp-route-IssueDate="@thing.IssueDate"
+                                       asp-route-CriminalRecordId="@thing.CriminalRecordId"
+                                       asp-route-CriminalIdNum="@thing.CriminalIdNum"
+                                       asp-route-First_Name="@thing.First_Name"
+                                       asp-route-Last_Name="@thing.Last_Name"
+                                       asp-route-Age="@thing.Age"
+                                       class="btn btn-primary">Edit</a>
+                                    <p> </p>
+                                    <a asp-controller="AddCriminalRec" asp-action="Delete" asp-route-id="@thing.Id" class="btn btn-danger">Delete</a>
+                                </div>
+                            </td>
+
+                        </tr>
+
+
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan=11>
+                            <p>No criminal records available at this moment</p>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </form>
+    </body>
+</html>

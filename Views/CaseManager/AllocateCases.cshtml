@@ -1,0 +1,35 @@
+﻿@model IEnumerable<SAP.Models.Cases>
+
+<h2>Allocate Cases</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Offence Committed</th>
+            <th>Assigned To</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var caseItem in Model)
+        {
+            <tr>
+                <td>@caseItem.OffenceCommitted</td>
+                <td>@caseItem.AssignedTo</td>
+                <td>
+                    <form asp-action="AllocateCase" method="post">
+                        <input type="hidden" name="caseId" value="@caseItem.Id" />
+                        <select name="selectedManagerId">
+                            <option value="">Select Manager</option>
+                            @foreach (var manager in ViewData["Managers"] as List<SAP.Models.Managers>)
+                            {
+                                <option value="@manager.ManagerId">@manager.First_Name @manager.Last_Name</option>
+                            }
+                        </select>
+                        <button type="submit">Allocate</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

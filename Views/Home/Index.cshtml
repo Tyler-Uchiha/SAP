@@ -1,0 +1,71 @@
+﻿@* <a asp-controller="CaseManager" asp-action="AllocateCases" class="btn btn-danger">Managers</a> *@
+
+@* <p style="font-size : 110px">Aesthetically pleasing home page</p> *@
+
+
+<body style="background-color : rgb(38, 81, 112)">
+
+    <div class="container mt-4">
+        
+        <div class="row justify-content-center mb-4">
+            <div class="col-md-6">
+                <img class="img-fluid mx-auto d-block w-50" src="~/pictures/saps_badge.svg.png" />
+            </div>
+        </div>
+
+        <div class="row justify-content-center mb-4 mt-2">
+            <div class="col-md-6 justify-content-center">
+                <h1 style="text-align : center; color : White;">SAPS CRIME LOGGER</h1>
+            </div>
+        </div>
+
+        <div class="row" style="margin-left : 32%;">
+            <div class="col-md-8">
+                <div class="input-group mb-3 w-75">
+                    <input type="text" class="form-control" placeholder="Search criminal records">
+                    <button class="btn btn-secondary" type="button">Search</button>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <a class="nav-link text-light" asp-area="" asp-controller="NewSuspect" asp-action="RecordNewSuspect">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <i class="bi bi-person-plus" style="font-size : 250%; color : darkslategrey"></i>
+                            <h5 class="card-title text-black">Add Suspects</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            
+            <div class="col-md-4">
+                <a class="nav-link text-light" asp-controller="NewSuspect" asp-action="TableAllSuspects">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <i class="bi bi-list-ul text-info" style="font-size : 250%;"></i>
+                            <h5 class="card-title text-black">View Suspects</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-4">
+                <a class="nav-link text-light" asp-controller="AddCriminalRec" asp-action="AllCriminalRecords">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <i class="bi bi-list-task" style="font-size : 250%; color : darkslateblue"></i>
+                            <h5 class="card-title text-black">View Criminal Records</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://kit.fontawesome.com/your_font_awesome_key.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C8fC6FzEZzIB0T5NY/B57H7+7560665679652002963116/3253567800" crossorigin="anonymous"></script>
+</body>

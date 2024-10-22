@@ -1,0 +1,118 @@
+﻿@model List<SAP.Models.NewSuspect>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    @{
+        ViewData["Title"] = "All Suspects";
+    }
+
+    <h3>@ViewData["Title"]</h3>
+
+    <div>
+        @if (TempData["AlertMessage"] != null)
+        {
+            <div class="alert alert-success">
+                @TempData["AlertMessage"]
+                <button type="button" class="close mx-5" data-dismiss="alert">
+                </button>
+            </div>
+        }
+        
+        @if (TempData["AlertMessage_Error"] != null)
+        {
+            <div class="alert alert-danger">
+                @TempData["AlertMessage_Error"]
+                <button type="button" class="close mx-5" data-dismiss="alert">
+                </button>
+            </div>
+        }
+
+
+        @if (TempData["AlertMessage_Edit"] != null)
+        {
+            <div class="alert alert-success">
+                @TempData["AlertMessage_Edit"]
+            </div>
+        }
+    </div>
+
+    <hr />
+    <a asp-controller="NewSuspect" asp-action="RecordNewSuspect" class="btn btn-dark">Add Suspect</a>
+    <br />
+    <br />
+    <form class="container-fluid">
+        <table id="dataTable" class="table table-bordered table-responsive table-hover table-striped">
+            <thead>
+                <tr class="table-active">
+                    <th class="col">Suspect Id Number</th>
+                    <th class="col">SuspectId</th>
+                    <th class="col">First_Name</th>
+                    <th class="col">Last_Name</th>
+                    <th class="col">Sex</th>
+                    <th class="col">Age</th>
+                    <th class="col">Height</th>
+                    <th class="col">Eye_Color</th>
+                    <th> </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var thing in Model)
+                    {
+                        <tr>
+                            <td>@thing.SuspectIdNum</td>
+                            <td>@thing.SuspectId</td>
+                            <td>@thing.First_Name</td>
+                            <td>@thing.Last_Name</td>
+                            <td>@thing.Sex</td>
+                            <td>@thing.Age</td>
+                            <td>@thing.Height</td>
+                            <td>@thing.Eye_Color</td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <a asp-controller="NewSuspect" asp-action="Edit" asp-route-Id="@thing.Id"  class="btn btn-primary">Edit</a>
+                                   
+                                    <p> </p>
+                                    <a asp-controller="AddCriminalRec" asp-action="AddCriminalRec" asp-route-suspectIdNum="@thing.SuspectIdNum" asp-route-First_Name="@thing.First_Name"
+                                       asp-route-Last_Name="@thing.Last_Name"
+                                       asp-route-Age="@thing.Age" 
+                                       asp-route-model="Model" 
+                                       class="btn btn-dark me-1">Add Criminal Record
+                                   </a>
+                                </div>
+                            </td>
+
+                        </tr>
+
+
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan=11>
+                            <p>No loans available at this moment</p>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </form>
+
+</body>
+</html>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('#dataTable').DataTable();
+        });
+    </script>
+}

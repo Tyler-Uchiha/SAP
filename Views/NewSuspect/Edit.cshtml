@@ -1,0 +1,92 @@
+﻿@model NewSuspect
+
+@if (TempData["AlertMessage_Error"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["AlertMessage_Error"]
+        <button type="button" class="close mx-5" data-dismiss="alert">
+            <span>
+                &times;
+            </span>
+        </button>
+    </div>
+}
+
+<form method="post">
+
+    <div class="border p-3 mt-4">
+
+        <div class="row pb-2">
+            <h2 class="text-primary">Edit Criminal Record</h2>
+        </div>
+
+        <div class="mb-3" row>
+            <label asp-for="SuspectIdNum">Suspect Id Number</label>
+            <input asp-for="SuspectIdNum" type="number" class="form-control">
+            <span asp-validation-for="SuspectIdNum" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3" row>
+            <label asp-for="SuspectId"></label>
+            <input asp-for="SuspectId" type="text" class="form-control">
+            <span asp-validation-for="SuspectId" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3" row>
+            <label asp-for="First_Name"></label>
+            <input asp-for="First_Name" type="text" class="form-control">
+            <span asp-validation-for="First_Name" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3" row>
+            <label asp-for="Last_Name"></label>
+            <input asp-for="Last_Name" type="text" class="form-control">
+            <span asp-validation-for="Last_Name" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3" row>
+            <label asp-for="Sex"></label>
+            <input asp-for="Sex" type="text" class="form-control">
+            <span asp-validation-for="Sex" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3" row>
+            <label asp-for="Age"></label>
+            <input asp-for="Age" type="text" class="form-control">
+            <span asp-validation-for="Age" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3" row>
+            <label asp-for="Height"></label>
+            <input asp-for="Height" type="text" class="form-control">
+            <span asp-validation-for="Height" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3" row>
+            <label asp-for="Eye_Color"></label>
+            <input asp-for="Eye_Color" type="text" class="form-control">
+            <span asp-validation-for="Eye_Color" class="text-danger"></span>
+        </div>
+
+        <div class="row">
+
+            <div class="col-6 col-3">
+                <button type="submit" class="btn btn-primary form-control">Update</button>
+            </div>
+
+            <div class="col-6 col-3">
+                <a asp-controller="AddCriminalRec" asp-action="AllCriminalRecords" class="btn btn-outline-secondary border form-control">Back To List</a>
+            </div>
+        </div>
+    </div>
+</form>
+
+@* To implement client side validation, we need to use a jquery script that's included in mvc*@
+
+<!-- Add the below script to implement client side validation (2:59:00)-->
+@section Scripts
+{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

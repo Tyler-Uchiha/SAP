@@ -1,0 +1,131 @@
+﻿@model NewSuspect
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+    </head>
+
+<body >
+    @if (TempData["AlertMessage"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["AlertMessage"]
+            <button type="button" class="close mx-5" data-dismiss="alert">
+                <span>
+                    &times;
+                </span>
+            </button>
+        </div>
+    }
+    
+
+    <div class="container" style="margin-left : 12%">
+            <form method="post">
+            <div class="border p-3 mt-4 w-75 border-1 border-dark">
+
+                    <div class="row pb-2">
+                        <h2 class="text-primary">Add Suspect</h2>
+                    </div>
+
+                    <div class="mb-3" row>
+                        <label asp-for="SuspectIdNum" class="my-3"></label>
+                        <input asp-for="SuspectIdNum" type="text" class="form-control w-25 border-1 border-dark">
+                        <span asp-validation-for="SuspectIdNum" class="text-danger"></span>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="mb-3" row>
+                                <label asp-for="First_Name" class="my-3"></label>
+                            <input asp-for="First_Name" type="text" class="form-control w-50 border-1 border-dark">
+                                <span asp-validation-for="First_Name" class="text-danger"></span>
+                            </div>
+                        </div>
+                    
+                        <div class="col">
+                            <div class="mb-3" row>
+                                <label asp-for="Last_Name" class="my-3"></label>
+                            <input asp-for="Last_Name" type="text" class="form-control w-50 border-1 border-dark">
+                                <span asp-validation-for="Last_Name" class="text-danger"></span>
+                            </div>
+                        </div>  
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="col">
+                            @* <div class="mb-3" row>
+                                <label asp-for="Sex" class="my-3"></label>
+                            <input asp-for="Sex" type="text" class="form-control w-50 border-1 border-dark">
+                                <span asp-validation-for="Sex" class="text-danger"></span>
+                            </div> *@
+
+                            <div class="mb-3" row>
+                                <div class="container">
+                                    <label asp-for="Sex" class="my-3"></label>
+                                    <select asp-for="Sex" type="text" asp-items="@ViewBag.Sex" class=" form-control w-50 my-3 border p-xl dropdown-toggle border-1 border-dark">
+                                    <option>Select Sex</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col">
+                            <div class="mb-3" row>
+                                <label asp-for="Age" class="my-3"></label>
+                            <input asp-for="Age" type="number" class="form-control w-50 border-1 border-dark">
+                                <span asp-validation-for="Age" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="mb-3" row>
+                                <label asp-for="Height" class="my-3"></label>
+                                <input asp-for="Height" type="number" class="form-control w-50 border-1 border-dark">
+                                <span asp-validation-for="Height" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="container">
+                                <label asp-for="Eye_Color" class="my-3"></label>
+                            <select asp-for="Eye_Color" type="text" asp-items="@ViewBag.EyeColour" class=" form-control w-50 my-3 border p-xl dropdown-toggle border-1 border-dark">
+                                    <option>Select Eye Colour</option>
+                                </select>
+                            </div>
+                    </div>
+
+                    <div row>
+                        <div class="row mt-4" style="margin-left : 35%">
+                            <button type="submit" class="btn btn-primary form-control w-25 ">Submit</button>
+                        </div>
+
+                        @if (TempData["AlertMessage"] != null)
+                        {
+                            <div class="alert alert-success">
+                                @TempData["AlertMessage"]
+                                <button type="button" class="close mx-5" data-dismiss="alert">
+                                    <span>
+                                        &times;
+                                    </span>
+                                </button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>
+
+@section Scripts
+{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+} 

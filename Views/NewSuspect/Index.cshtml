@@ -1,0 +1,11 @@
+﻿@if (TempData["AlertMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["AlertMessage"]
+        <button type="button" class="close mx-5" data-dismiss="alert">
+            <span>
+                &times;
+            </span>
+        </button>
+    </div>
+}

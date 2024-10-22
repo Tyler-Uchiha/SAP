@@ -1,0 +1,146 @@
+﻿@model AddCriminalRec
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+
+<body>
+    <div class="container border-1 border-dark">
+        <form method="post" asp-action="AddCriminalRec">
+            <div class="row-cols mt-3 ms-6 col-md-6 mx-auto">
+
+                <div class="row">
+                        <div class="col">
+                            <div class="mb-3" row>
+                                <div class="container">
+                                    <select asp-for="OffenceCommitted" type="text" asp-items="@ViewBag.OffenceList" class=" form-control w-50 my-3 border p-xl dropdown-toggle border-1 border-dark">
+                                    <option>Select Offence Commitetd</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                 </div>
+
+                 <div class="row">
+                    <div class="col">
+                        <div class="mb-3 col-6 col-3" row>
+                            <label asp-for="Sentence" class="my-3"></label>
+                            <input asp-for="Sentence" type="number" class="form-control w-100 border-1 border-dark">
+                            <span asp-validation-for="Sentence" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="mb-3 col-6 col-3" row>
+                            <select asp-for="IssuedAt" type="text" asp-items="@ViewBag.Stations" class=" form-control w-100  border dropdown-toggle border-1 border-dark">
+                                <option>Select Station</option>
+                            </select>
+                        </div>
+                    </div>  
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="mb-3 col-6 col-3" row>
+                            <label asp-for="IssuedBy" class="my-3"></label>
+                            <input asp-for="IssuedBy" type="text" class="form-control w-100 border-1 border-dark">
+                            <span asp-validation-for="IssuedBy" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="mb-3 col-6 col-3" row>
+                            <label asp-for="IssueDate" class="my-3"></label>
+                            <input asp-for="IssueDate" type="date" class="form-control w-100 border-1 border-dark">
+                            <span asp-validation-for="IssueDate" class="text-danger"></span>
+                        </div>
+                    </div>  
+                </div>
+
+                <div class="row">
+
+                    <div class="col-6 col-3">
+                        <button type="submit" class="btn btn-primary form-control">Submit</button>
+                    </div>
+
+                    <div class="col-6 col-3">
+                        <a asp-controller="AddCriminalRec" asp-action="AllCriminalRecords" class="btn btn-outline-secondary border form-control">Back To List</a>
+                    </div>
+                </div>
+                
+                @* <div class="row mt-4" style="margin-left : 35%">
+                    <button type="submit" class="btn btn-primary form-control w-25 ">Submit</button>
+                </div> *@
+
+                @if (TempData["AlertMessage"] != null)
+                {
+                    <div class="alert alert-success">
+                        @TempData["AlertMessage"]
+                        <button type="button" class="close mx-5" data-dismiss="alert">
+                            <span>
+                                &times;
+                            </span>
+                        </button>
+                    </div>
+                }
+            </div>
+        </form>
+
+       @*  <form method="post">
+            <!-- specifies that form data must be sent as a http transaction when the submit btn is triggered-->
+            <div class="border p-3 mt-4">
+
+                <div class="row pb-2">
+                    <h2 class="text-primary">Edit Category</h2>
+                </div>
+
+                @*<div asp-validation-summary = "None"></div> <!-- Adds validation summary below the create category header--> *@
+
+                @* <div class="mb-3" row>
+                    <label asp-for="Sentence"></label> <!-- shorthand of stating the name, we used a property of the model to list it here-->
+                    <input asp-for="Sentence" type="number" class="form-control">  <!-- shorthand of giving an input section a variable name to refer to it late -->
+                    <span asp-validation-for="Sentence" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3" row>
+                    <label asp-for="IssuedAt"></label>
+                    <input input asp-for="IssuedAt" class="form-control"> <!-- The input type will automatically determined based on the model property that we have linked -->
+                    <span asp-validation-for="IssuedAt" class="text-danger"></span> <!-- Adds client side validation as error msg if incorrect data is entered (for custom errror msg see model)-->
+                </div>
+
+                <div class="mb-3" row>
+                    <label asp-for="IssuedBy"></label>
+                    <input input asp-for="IssuedBy" class="form-control"> <!-- The input type will automatically determined based on the model property that we have linked -->
+                    <span asp-validation-for="IssuedBy" class="text-danger"></span> <!-- Adds client side validation as error msg if incorrect data is entered (for custom errror msg see model)-->
+                </div>
+
+                <div class="mb-3" row>
+                    <label asp-for="IssueDate"></label>
+                    <input input asp-for="IssueDate" class="form-control"> <!-- The input type will automatically determined based on the model property that we have linked -->
+                    <span asp-validation-for="IssueDate" class="text-danger"></span> <!-- Adds client side validation as error msg if incorrect data is entered (for custom errror msg see model)-->
+                </div>
+                <div class="row">
+
+                    <div class="col-6 col-3">
+                        <button type="submit" class="btn btn-primary form-control">Update</button>
+                    </div>
+
+                    <div class="col-6 col-3">
+                        <a asp-controller="Category" asp-action="Index" class="btn btn-outline-secondary border form-control">Back To List</a>
+                    </div>
+                </div>
+            </div>
+        </form> *@
+
+    </div>
+</body>
+</html>
+
+@section Scripts
+{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+} 
