@@ -4,22 +4,22 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using SAP.Controllers;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 namespace SAP.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-            
         }
 
         public DbSet<NewSuspect> Suspects_Table { get; set; }
         public DbSet<AddCriminalRec> CriminalRecords_Table { get; set; }  
         public DbSet<ListofOffences> Offences_Table { get; set; }
-        public DbSet<UserDeletedCriminalRec> userDeletedCriminals_Table { get; set; }
         public DbSet<Managers> Managers_Table { get; set; }
         public DbSet<Cases> Cases_Table { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -34,7 +34,7 @@ namespace SAP.Data
 
             modelBuilder.Entity<AddCriminalRec>().HasData
             (
-                    new AddCriminalRec { Id = 1, CriminalRecordId = "C-1111-20241015-9999", CriminalIdNum = "1111111231234", OffenceCommitted = "Drugs" , Sentence = 3, IssuedAt = "Sandton" , IssuedBy = "Kelvin Moores", IssueDate = "2024-10-10"}
+                    new AddCriminalRec { Id = 1, CriminalRecordId = "C-1111-20241015-9999", CriminalIdNum = "1111111231234", OffenceCommitted = "Drugs" , Sentence = 3, IssuedAt = "Sandton" , IssuedBy = "Kelvin Moores", IssueDate = "2024-10-10", Case_Status = "Not Started"}
             );
 
             modelBuilder.Entity<Managers>().HasData

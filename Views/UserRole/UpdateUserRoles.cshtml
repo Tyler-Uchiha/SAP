@@ -1,0 +1,119 @@
+﻿@model List<SAP.Models.UpdateUserRolesViewModel>
+@{
+    ViewData["Title"] = "Update User Roles";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style>
+        .container-box {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .stats-box {
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+            margin: 10px;
+        }
+
+        .blue-box {
+            background-color: #e0f7fa;
+        }
+
+        .purple-box {
+            background-color: #f3e5f5;
+        }
+
+        .yellow-box {
+            background-color: #fff9c4;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <div class="stats-box blue-box">
+                    <h3>@ViewBag.CaseManagers</h3>
+                    <p>Case Managers</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stats-box purple-box">
+                    <h3>@ViewBag.StationManagersCount</h3>
+                    <p>Station Managers</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stats-box yellow-box">
+                    <h3>@ViewBag.PoliceOfficersCount</h3>
+                    <p>Police Officers</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+
+    <h1>Update User Roles</h1>
+
+    <table id="usersTable" class="table table-bordered table-responsive table-hover table-striped">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>User Name</th>
+                <th>Current Role</th>
+                <th>New Role</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.FirstName</td>
+                    <td>@user.LastName</td>
+                    <td>@user.UserName</td>
+                    <td>@user.CurrentRole</td>
+                    <td>
+                        <select class="form-control" id="roleSelect-@user.UserId" name="newRole">
+                            <option>Select Role</option>
+                            @foreach (var role in user.Roles)
+                            {
+                                <option value="@role.Name">@role.Name</option>
+                            }
+                        </select>
+                    </td>
+                    <td>
+                        <form asp-action="UpdateUserRoles" method="post" class="d-inline">
+                            <input type="hidden" name="userId" value="@user.UserId" />
+                            <input type="hidden" name="newRole" id="newRole-@user.UserId" />
+                            <button type="submit" class="btn btn-primary" onclick="setNewRole('@user.UserId')">Update Role</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#usersTable').DataTable();
+    });
+
+    function setNewRole(userId) {
+        var newRole = $('#roleSelect-' + userId).val();
+        $('#newRole-' + userId).val(newRole);
+    }
+</script>

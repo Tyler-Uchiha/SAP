@@ -51,18 +51,5 @@ namespace SAP.Controllers
             
             return RedirectToAction("Index"); // Redirect to some index view after allocation
         }
-
-        //[HttpPost]
-        //public ActionResult SelectManager(int managerId, Cases newCase)
-        //{
-        //    // Allocate to the selected manager
-        //    newCase.ManagerId = Convert.ToInt16(managerId).ToString();
-        //    var manager = _db.Managers_Table.ToList().First(m => m.Id == managerId);
-        //    manager.CaseCount++;
-
-        //    cases.Add(newCase);
-        //    return RedirectToAction("Index"); // Redirect to some index view after allocation
-        //}
-
     }
 }

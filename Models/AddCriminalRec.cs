@@ -41,6 +41,8 @@ namespace SAP.Models
         public string? Last_Name { get; set; }
         public int Age { get; set; }
 
+        public string? Case_Status { get; set; }
+
 
     }
 }

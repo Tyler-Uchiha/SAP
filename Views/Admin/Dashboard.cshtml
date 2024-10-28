@@ -1,0 +1,200 @@
+﻿@model dynamic
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .container-box {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .stats-box {
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+            margin: 10px;
+        }
+
+        .blue-box {
+            background-color: #e0f7fa;
+        }
+
+        .purple-box {
+            background-color: #f3e5f5;
+        }
+
+        .yellow-box {
+            background-color: #fff9c4;
+        }
+    </style>
+</head>
+<body style="background-color : rgb(244 244 244)">
+
+    <div class="container border border-light shadow p-3 mb-5 bg-white rounded" style="height: 45vh">
+        <div class="container mt-5">
+            <div class="row justify-content-between">
+                <div class="col-md-4 d-flex">
+                    <i class="bi bi-person-circle" style="font-size: 350%;"></i>
+                    <div style="margin-left: 5%; width: 300px">
+                        <h5 class="mb-0 mt-3" style="width: 200px;">Hello, Admin</h5>
+                        <p class="mb-0" style="width: 200px;">13 September 2024</p>
+                    </div>
+                    <div class="col-md-6 text-right" style="margin-left: 190%;">
+                        <a asp-controller="UserRole" asp-action="UpdateUserRoles" class="btn btn-primary mt-2">Update Roles</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <div class="stats-box blue-box">
+                    <h3>@ViewBag.Total_All_Cases</h3>
+                    <p>All Cases</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stats-box purple-box">
+                    <h3>@ViewBag.Open_All_Cases</h3>
+                    <p>All Active Cases</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stats-box yellow-box">
+                    <h3>@ViewBag.Closed_All_Cases</h3>
+                    <p>All Inactive Cases</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br></br>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+
+                <div class="container d-inline-block table-sm border border-light shadow p-3 mb-5 bg-white rounded" style="height: 70vh; margin-left : 0;">
+                    <h1 class=" mt-3 mb-3">Offence Statistics</h1>
+                    <hr />
+                    <table id="dataTable" class="table table-bordered table-responsive table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>Offence Committed</th>
+                                <th>Number of Crimes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var stat in Model.Offence_Stats)
+                            {
+                                <tr>
+                                    <td>@stat.OffenceCommitted</td>
+                                    <td>@stat.CrimeCount</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="col-sm">
+
+                <div class="container border border-light shadow p-3 mb-5 bg-white rounded row" style="height: 70vh; width : 105%;">
+                    <div class="container mt-3 mb-3">
+                        <h1>Offence Statistics Line Graph</h1>
+                        <div class="row">
+                            <div class="col-12">
+                                <canvas id="offenceChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <script>
+                        var offenceStats = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Offence_Stats));
+
+                        var labels = offenceStats.map(function (stat) {
+                            return stat.OffenceCommitted;
+                        });
+
+                        var data = offenceStats.map(function (stat) {
+                            return stat.CrimeCount;
+                        });
+
+                        var ctx = document.getElementById('offenceChart').getContext('2d');
+                        var offenceChart = new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                labels: labels,
+                                datasets: [{
+                                    label: 'Number of Crimes',
+                                    data: data,
+                                    borderColor: 'rgba(75, 192, 192, 1)',
+                                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                    borderWidth: 1,
+                                    fill: true
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    y: {
+                                        beginAtZero: true
+                                    }
+                                }
+                            }
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container border border-light shadow p-3 mb-5 bg-white rounded">
+        <table id="dataTable_2" class="table table-bordered table-responsive table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Total Cases</th>
+                    <th>Open Cases</th>
+                    <th>Closed Cases</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Case_ManagerS_Stats)
+                {
+                    <tr>
+                        <td>@item.FirstName</td>
+                        <td>@item.LastName</td>
+                        <td>@item.TotalCases</td>
+                        <td>@item.OpenCases</td>
+                        <td>@item.ClosedCases</td>
+                    </tr>
+                }
+            </tbody>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('#dataTable').DataTable();
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('#dataTable_2').DataTable();
+        });
+    </script>
+}
+

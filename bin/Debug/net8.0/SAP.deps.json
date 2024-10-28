@@ -44,6 +44,7 @@
           "Microsoft.EntityFrameworkCore.Sqlite": "8.0.10",
           "Microsoft.EntityFrameworkCore.Tools": "8.0.10",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "8.0.6",
+          "SAP.Utility": "1.0.0",
           "Microsoft.AspNetCore.Antiforgery": "8.0.0.0",
           "Microsoft.AspNetCore.Authentication.Abstractions": "8.0.0.0",
           "Microsoft.AspNetCore.Authentication.BearerToken": "8.0.0.0",
@@ -2767,6 +2768,17 @@
         },
         "compile": {
           "lib/net7.0/System.Windows.Extensions.dll": {}
+        }
+      },
+      "SAP.Utility/1.0.0": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Identity.UI": "8.0.10"
+        },
+        "runtime": {
+          "SAP.Utility.dll": {}
+        },
+        "compile": {
+          "SAP.Utility.dll": {}
         }
       },
       "Microsoft.AspNetCore.Antiforgery/8.0.0.0": {
@@ -5754,6 +5766,11 @@
       "sha512": "sha512-bR4qdCmssMMbo9Fatci49An5B1UaVJZHKNq70PRgzoLYIlitb8Tj7ns/Xt5Pz1CkERiTjcVBDU2y1AVrPBYkaw==",
       "path": "system.windows.extensions/7.0.0",
       "hashPath": "system.windows.extensions.7.0.0.nupkg.sha512"
+    },
+    "SAP.Utility/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     },
     "Microsoft.AspNetCore.Antiforgery/8.0.0.0": {
       "type": "referenceassembly",

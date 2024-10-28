@@ -22,34 +22,52 @@
 
         <div class="mb-3" row>
             <div class="container">
-                <select asp-for="OffenceCommitted" type="text" asp-items="@ViewBag.OffencesList" class=" my-3 border p-xl dropdown-toggle">
+                <select asp-for="OffenceCommitted" type="text" class="form-control" asp-items="@ViewBag.OffencesList" class=" my-3 border p-xl dropdown-toggle">
                     <option>Select Offence Commitetd</option>
                 </select>
             </div>
         </div>
        
         <div class="mb-3" row>
-            <label asp-for="Sentence"></label>
-            <input asp-for="Sentence" type ="number" class="form-control"> 
-            <span asp-validation-for="Sentence" class="text-danger"></span> 
+            <div class="container">
+                <label asp-for="Sentence"></label>
+                <input asp-for="Sentence" type ="number" class="form-control"> 
+                <span asp-validation-for="Sentence" class="text-danger"></span> 
+            </div>
         </div>
 
         <div class="mb-3" row>
-            <label asp-for="IssuedAt"></label>
-            <input asp-for="IssuedAt" type="text" class="form-control">
-            <span asp-validation-for="IssuedAt" class="text-danger"></span>
+            <div class="container">
+                <label asp-for="IssuedAt"></label>
+                <input asp-for="IssuedAt" type="text" class="form-control">
+                <span asp-validation-for="IssuedAt" class="text-danger"></span>
+            </div>
         </div>
 
         <div class="mb-3" row>
-            <label asp-for="IssuedBy"></label>
-            <input asp-for="IssuedBy" type="text" class="form-control">
-            <span asp-validation-for="IssuedBy" class="text-danger"></span>
+            <div class="container">
+                <label asp-for="IssuedBy"></label>
+                <input asp-for="IssuedBy" type="text" class="form-control">
+                <span asp-validation-for="IssuedBy" class="text-danger"></span>
+            </div>
         </div>
 
         <div class="mb-3" row>
-            <label asp-for="IssueDate"></label>
-            <input asp-items="@ViewBag.CurrIssueDate" asp-for="IssueDate" type="date" class="form-control">
-            <span asp-validation-for="IssueDate" class="text-danger"></span>
+            <div class="container">
+                <label asp-for="IssueDate"></label>
+                <input asp-items="@ViewBag.CurrIssueDate" asp-for="IssueDate" type="date" class="form-control">
+                <span asp-validation-for="IssueDate" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="mb-3" row>
+            <div class="container">
+                <label asp-for="Case_Status">Case Status</label>
+                <select asp-for="Case_Status" type="text" class="form-control" asp-items="@ViewBag.Case_Status" class=" my-3 border p-xl dropdown-toggle">
+                    <option>Select Case Status</option>
+                </select>
+                <span asp-validation-for="Case_Status" class="text-danger"></span>
+            </div>
         </div>
 
         <div class="row">

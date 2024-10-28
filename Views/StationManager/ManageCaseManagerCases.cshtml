@@ -1,0 +1,34 @@
+﻿@* @model IEnumerable<SAP.Models.CaseManagerCasesViewModel>
+
+<h2>Case Manager Cases</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Criminal Record ID</th>
+            <th>Case Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.FirstName</td>
+                <td>@item.LastName</td>
+                <td>@item.CriminalRecordId</td>
+                <td>@item.CaseStatus</td>
+                <td>
+                    <form asp-action="TerminateRole" method="post">
+                        <input type="hidden" name="userId" value="@item.UserId" />
+                        <input type="hidden" name="role" value="Case Manager" />
+                        <button type="submit">Terminate Role</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+ *@

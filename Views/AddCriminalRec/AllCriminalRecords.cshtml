@@ -45,6 +45,7 @@
                     <th class="col">Issued At</th>
                     <th class="col">Issued By</th>
                     <th class="col">Issue Date</th>
+                    <th class="col">Case Status</th>
                     <th> </th>
                 </tr>
             </thead>
@@ -62,6 +63,7 @@
                             <td>@thing.IssuedAt</td>
                             <td>@thing.IssuedBy</td>
                             <td>@thing.IssueDate</td>
+                            <td>@thing.Case_Status</td>
                             <td>
                                 <div class="btn-group btn-group-sm">
                                     <a asp-controller="AddCriminalRec" asp-action="Edit" asp-route-id="@thing.Id" 
@@ -70,7 +72,7 @@
                                         asp-route-CriminalIdNum="@thing.CriminalIdNum" 
                                       class="btn btn-primary">Edit</a>
                                     <p> </p>
-                                    <a asp-controller="AddCriminalRec" asp-action="Delete" asp-route-id="@thing.Id" class="btn btn-danger">Delete</a>
+                                    
                                 </div>
                             </td>
                         </tr>

@@ -1,0 +1,75 @@
+﻿@{
+    var records = ViewBag.Assigned_Cases as List<CasesPerManagerRecs>;
+}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+    </head>
+
+    <body>
+        <form>
+            <table id="dataTable" class="table table-bordered table-responsive table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>Docket Number</th>
+                        <th>Criminal's Id No.</th>
+                        <th>Sentence</th>
+                        <th>Assigned To</th>
+                        <th>Manager Id</th>
+                        <th>Case Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
+                    {
+                        foreach (var thing in records)
+                        {
+                            <tr>
+                                <td>@thing.CriminalRecId</td>
+                                <td>@thing.CriminalIdNum</td>
+                                <td>@thing.Sentence</td>
+                                <td>@thing.AssignedTo</td>
+                                <td>@thing.ManagerIdenti</td>
+                                <td>@thing.CaseStatus</td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <a asp-controller="StationManager" asp-action="CasesPerManager" asp-route-ManagerIdenti="@thing.ManagerIdenti" class = "btn btn-primary mx-1"n style="width : 120%">View Cases</a>
+
+                                        <br/>
+                                        <a asp-controller="" asp-action="" asp-route-ManagerID="@thing.ManagerIdenti" class="btn btn-danger mx-1">
+                                                Terminate
+                                        </a>
+                                        <br/>
+                                        <a asp-controller="" asp-action="" asp-route-ManagerID="@thing.ManagerIdenti" class="btn btn-success">
+                                                Restore
+                                        </a>
+                                    </div>
+                                </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan=6>
+                                    <p>No records available at this moment</p>
+                                </td>
+                            </tr>
+                        }
+                </tbody>
+            </table>
+        </form>
+    </body>
+</html>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('#dataTable').DataTable();
+        });
+    </script>
+}

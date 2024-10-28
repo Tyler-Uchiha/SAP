@@ -1,0 +1,77 @@
+﻿@{
+    var records = ViewBag.CaseManagers as List<CaseManagerCasesSM>;
+}
+
+@{
+    var recordspo = ViewBag.CaseManagers as List<CaseManagerCasesSM>;
+}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+    </head>
+
+    <body>
+        <form>
+            <table id="dataTable" class="table table-bordered table-responsive table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Total Cases</th>
+                        <th>Open Cases</th>
+                        <th>Closed Cases</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
+                    {
+                        foreach (var thing in records)
+                        {
+                            <tr>
+                                <td>@thing.First_Name</td>
+                                <td>@thing.Last_Name</td>
+                                <td>@thing.Total_Cases</td>
+                                <td>@thing.Open_Cases</td>
+                                <td>@thing.Closed_Cases</td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <a asp-controller="StationManager" asp-action="CasesPerManager" asp-route-ManagerID="@thing.ManagerID" class = "btn btn-primary mx-1"n style="width : 120%">View Cases</a>
+
+                                        <br/>
+                                        <a asp-controller="" asp-action="" asp-route-ManagerID="@thing.ManagerID" class="btn btn-danger mx-1">
+                                                Terminate
+                                        </a>
+                                        <br/>
+                                        <a asp-controller="" asp-action="" asp-route-ManagerID="@thing.ManagerID" class="btn btn-success">
+                                                Restore
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan=6>
+                                <p>No records available at this moment</p>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </form>
+    </body>
+</html>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('#dataTable').DataTable();
+        });
+    </script>
+}

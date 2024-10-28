@@ -194,8 +194,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRkQ3JpbWluYWxSZWNcQWxsQ3JpbWluYWxSZWNvcmRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/taylo/source/repos/SAP/SAP/Views/AddCriminalRec/CaseManagerView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRkQ3JpbWluYWxSZWNcQ2FzZU1hbmFnZXJWaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/taylo/source/repos/SAP/SAP/Views/AddCriminalRec/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRkQ3JpbWluYWxSZWNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/taylo/source/repos/SAP/SAP/Views/Admin/Dashboard.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRGFzaGJvYXJkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/taylo/source/repos/SAP/SAP/Views/CaseManager/AllocateCases.cshtml]
@@ -240,6 +248,26 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/taylo/source/repos/SAP/SAP/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/taylo/source/repos/SAP/SAP/Views/StationManager/CasesPerManager.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3RhdGlvbk1hbmFnZXJcQ2FzZXNQZXJNYW5hZ2VyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/taylo/source/repos/SAP/SAP/Views/StationManager/GetCaseManagers.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3RhdGlvbk1hbmFnZXJcR2V0Q2FzZU1hbmFnZXJzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/taylo/source/repos/SAP/SAP/Views/StationManager/ManageCaseManagerCases.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3RhdGlvbk1hbmFnZXJcTWFuYWdlQ2FzZU1hbmFnZXJDYXNlcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/taylo/source/repos/SAP/SAP/Views/StationManager/ManagePoliceOfficerCases.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3RhdGlvbk1hbmFnZXJcTWFuYWdlUG9saWNlT2ZmaWNlckNhc2VzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/taylo/source/repos/SAP/SAP/Views/UserRole/UpdateUserRoles.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclJvbGVcVXBkYXRlVXNlclJvbGVzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/taylo/source/repos/SAP/SAP/Views/_ViewImports.cshtml]
