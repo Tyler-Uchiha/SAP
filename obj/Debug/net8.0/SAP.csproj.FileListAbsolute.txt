@@ -568,6 +568,7 @@ C:\Users\taylo\source\repos\SAP\SAP\obj\Debug\net8.0\SAP.MvcApplicationPartsAsse
 C:\Users\taylo\source\repos\SAP\SAP\obj\Debug\net8.0\SAP.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\taylo\source\repos\SAP\SAP\obj\Debug\net8.0\SAP.RazorAssemblyInfo.cache
 C:\Users\taylo\source\repos\SAP\SAP\obj\Debug\net8.0\SAP.RazorAssemblyInfo.cs
+C:\Users\taylo\source\repos\SAP\SAP\obj\Debug\net8.0\SAP.sourcelink.json
 C:\Users\taylo\source\repos\SAP\SAP\obj\Debug\net8.0\staticwebassets.build.json
 C:\Users\taylo\source\repos\SAP\SAP\obj\Debug\net8.0\staticwebassets.development.json
 C:\Users\taylo\source\repos\SAP\SAP\obj\Debug\net8.0\staticwebassets\msbuild.SAP.Microsoft.AspNetCore.StaticWebAssets.props

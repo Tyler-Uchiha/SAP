@@ -76,138 +76,131 @@ namespace SAP.Controllers
 
             return offenceItems;
         }
+        private void GetCurrDate()
+        {
 
+            var Curr_Date = DateTime.Now.ToString();
+            ViewBag.Curr_Date = Curr_Date;
+        }
 
         public IActionResult AddCriminalRec(string suspectIdNum, string First_Name, string Last_Name, int Age)
         {
-            
-            TempData["TmpSuspectIdNum"] = suspectIdNum;
-            TempData["Age"] = Age;
+            if (User.IsInRole("Superman") ^ User.IsInRole("Police Officer"))
+            {
+                TempData["TmpSuspectIdNum"] = suspectIdNum;
+                TempData["Age"] = Age;
 
-            ViewBag.Stations = GetStations();
-            ViewBag.OffenceList = GetOffences();
-            return View();
+                ViewBag.Curr_Date = DateTime.Now.ToString();
+
+                ViewBag.Stations = GetStations();
+                ViewBag.OffenceList = GetOffences();
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("NoEntry", "Home");
+            }
         }
 
         [HttpPost]
         public IActionResult AddCriminalRec(AddCriminalRec item, Cases obj)
         {
-            ViewBag.Stations = GetStations();
-            ViewBag.OffenceList = GetOffences();
-
-            string StrIssueDateUnsorted = item.IssueDate.Substring(0, 10);
-            string StrIssueDateSorted = "";
-            string suspectIdNum = TempData["TmpSuspectIdNum"] as string;
-
-            //Add the criminal's Id number into the criminal record table
-            item.CriminalIdNum = suspectIdNum;
-
-
-            for (int i = 0; i < StrIssueDateUnsorted.Length; i++)
+            if (User.IsInRole("Superman") ^ User.IsInRole("Police Officer"))
             {
-                if (StrIssueDateUnsorted[i] != '-')
+                ViewBag.Stations = GetStations();
+                ViewBag.OffenceList = GetOffences();
+                ViewBag.Curr_Date = DateTime.Now.ToString();
+
+                string StrIssueDateUnsorted = item.IssueDate.Substring(0, 10);
+                string StrIssueDateSorted = "";
+                string suspectIdNum = TempData["TmpSuspectIdNum"] as string;
+
+                //Add the criminal's Id number into the criminal record table
+                item.CriminalIdNum = suspectIdNum;
+
+
+                for (int i = 0; i < StrIssueDateUnsorted.Length; i++)
                 {
-                    StrIssueDateSorted += StrIssueDateUnsorted[i];
+                    if (StrIssueDateUnsorted[i] != '-')
+                    {
+                        StrIssueDateSorted += StrIssueDateUnsorted[i];
+                    }
                 }
-            }
 
-            var lastId = _db.CriminalRecords_Table
-                .FromSql($"SELECT Max(Id) AS Id FROM [dbo].[CriminalRecords_Table]")
-                .Select(s => s.Id)
-                .FirstOrDefault();
+                var lastId = _db.CriminalRecords_Table
+                    .FromSql($"SELECT Max(Id) AS Id FROM [dbo].[CriminalRecords_Table]")
+                    .Select(s => s.Id)
+                    .FirstOrDefault();
 
-            int MaxId = Convert.ToInt32(lastId) + 1;
+                int MaxId = Convert.ToInt32(lastId) + 1;
 
-            //Auto Generate Criminal record Id
-            item.CriminalRecordId = "C" + "-" + suspectIdNum.Substring(0, 6) + "-" + StrIssueDateSorted + "-" + MaxId;
+                //Auto Generate Criminal record Id
+                item.CriminalRecordId = "C" + "-" + suspectIdNum.Substring(0, 6) + "-" + StrIssueDateSorted + "-" + MaxId;
 
-            if (item != null && ModelState.IsValid)  
-            {
-                //Add criminal record to cases
-                obj.CriminalRecordId = item.CriminalRecordId;
-                obj.CriminalIdNum = item.CriminalIdNum;
-                obj.OffenceCommitted = item.OffenceCommitted;
-                obj.Sentence = item.Sentence;
-                obj.IssuedAt = item.IssuedAt;
-                obj.IssuedBy = item.IssuedBy;
-                obj.IssueDate = item.IssueDate;
-                obj.IsAssigned = false;
-                obj.AssignedTo = "None";
-                obj.ManagerId = "None";
-                obj.CaseStatus = "Not Started";
-                
-
-                //============================================================
-                // Find eligible managers with the role "Case Manager"
-                var managers = _db.Users.Where(u => u.User_Role == "Case Manager").ToList();
-                var minCaseCount = managers.Min(m => m.CaseCount);
-                var eligibleManagers = managers.Where(m => m.CaseCount == minCaseCount).ToList();
-
-                if (eligibleManagers.Count >= 1)
+                if (item != null && ModelState.IsValid)
                 {
-                    // Automatically assign to the single eligible manager
-                    var selectedManager = eligibleManagers.First();
-                    obj.AssignedTo = selectedManager.First_Name + " " + selectedManager.Last_Name;
-                    obj.ManagerId = selectedManager.Id; // Assuming Id is the primary key
-                    obj.IsAssigned = true;
-                    obj.CaseStatus = "In-Progress";
-
-                    // Update manager's case count
-                    selectedManager.CaseCount++;
-                    _db.Users.Update(selectedManager);
-                }
-                else if (eligibleManagers.Count == 0)
-                {
+                    //Add criminal record to cases
+                    obj.CriminalRecordId = item.CriminalRecordId;
+                    obj.CriminalIdNum = item.CriminalIdNum;
+                    obj.OffenceCommitted = item.OffenceCommitted;
+                    obj.Sentence = item.Sentence;
+                    obj.IssuedAt = item.IssuedAt;
+                    obj.IssuedBy = item.IssuedBy;
+                    obj.IssueDate = item.IssueDate;
                     obj.IsAssigned = false;
-                    obj.CaseStatus = "Not Assigned";
-                    item.Case_Status = "Not Started";
+                    obj.AssignedTo = "None";
+                    obj.ManagerId = "None";
+                    obj.CaseStatus = "Not Started";
+
+
+                    //============================================================
+                    // Find eligible managers with the role "Case Manager"
+                    var managers = _db.Users.Where(u => u.User_Role == "Case Manager").ToList();
+                    var minCaseCount = managers.Min(m => m.CaseCount);
+                    var eligibleManagers = managers.Where(m => m.CaseCount == minCaseCount).ToList();
+
+                    if (eligibleManagers.Count >= 1)
+                    {
+                        // Automatically assign to the single eligible manager
+                        var selectedManager = eligibleManagers.First();
+                        obj.AssignedTo = selectedManager.First_Name + " " + selectedManager.Last_Name;
+                        obj.ManagerId = selectedManager.Id; // Assuming Id is the primary key
+                        obj.IsAssigned = true;
+                        obj.CaseStatus = "In-Progress";
+
+                        // Update manager's case count
+                        selectedManager.CaseCount++;
+                        _db.Users.Update(selectedManager);
+                    }
+                    else if (eligibleManagers.Count == 0)
+                    {
+                        obj.IsAssigned = false;
+                        obj.CaseStatus = "Not Assigned";
+                        item.Case_Status = "Not Started";
+                    }
+
+                    _db.SaveChangesAsync().GetAwaiter().GetResult();
+
+                    _db.CriminalRecords_Table.Update(item);
+                    _db.Cases_Table.Update(obj);
+                    item.IssueDate = item.IssueDate.Substring(0, 10);
+                    _db.SaveChanges();
+                    TempData["AlertMessage"] = "Criminal Record Added";
+
+                    return RedirectToAction("AllCriminalRecords", "AddCriminalRec");
                 }
-
-                // Save changes
-                _db.SaveChangesAsync().GetAwaiter().GetResult();
-
-
-                //============================================================
-
-                ////-->
-                //// Find eligible managers
-                //var managers = _db.Managers_Table.ToList();
-                //var minCaseCount = managers.Min(m => m.CaseCount);
-                //var eligibleManagers = managers.Where(m => m.CaseCount == minCaseCount).ToList();
-
-                //if (eligibleManagers.Count >= 1)
-                //{
-                //    // Automatically assign to the single eligible manager
-                //    var selectedManager = eligibleManagers.First();
-                //    obj.AssignedTo = selectedManager.First_Name + " " + selectedManager.Last_Name;
-                //    obj.ManagerId = selectedManager.ManagerId;
-                //    obj.IsAssigned = true;
-                //    obj.CaseStatus = "In-Progress";
-
-                //    // Update manager's case count
-                //    selectedManager.CaseCount++;
-                //    _db.Managers_Table.Update(selectedManager);
-                //}
-                //else if (eligibleManagers.Count == 0)
-                //{
-                //    obj.IsAssigned = false; 
-                //    obj.CaseStatus = "Not Assigned";
-                //}
-
-                // <--
-                _db.CriminalRecords_Table.Update(item);
-                _db.Cases_Table.Update(obj);
-                item.IssueDate = item.IssueDate.Substring(0, 10);
-                _db.SaveChanges();
-                TempData["AlertMessage"] = "Criminal Record Added";
-
-                return RedirectToAction("AllCriminalRecords", "AddCriminalRec");
+                else
+                {
+                    TempData["AlertMessage_Error"] = "Criminal Record Not Added";
+                    return View();
+                }
             }
             else
             {
-                TempData["AlertMessage_Error"] = "Criminal Record Not Added";
-                return View();
+                return RedirectToAction("NoEntry", "Home");
             }
+
+            
         }
 
         //Add FullName to the criminal record
@@ -218,115 +211,83 @@ namespace SAP.Controllers
             return View(AllCriminals);
         }
 
-        //Edit record
-        //Pass the captured date 
-
-        //private void PopulateOffencesList()
-        //{
-        //    var offenceList = from r in _db.Offences_Table
-        //                      select r.Offences;
-
-        //    List<string> offencesList_tmp = offenceList.ToList();
-
-        //    ViewBag.OffencesList = new SelectList(offencesList_tmp);
-        //}
-
-        
-
         public IActionResult Edit(int Id, AddCriminalRec obj)
         {
-            
-            if (Id == null || Id == 0)
+
+            if (User.IsInRole("Superman") ^ User.IsInRole("Case Manager"))
             {
-                return NotFound();
+                if (Id == null || Id == 0)
+                {
+                    return NotFound();
+                }
+
+                //Fetch record
+
+                AddCriminalRec DataRow = _db.CriminalRecords_Table.Find(Id);
+
+                if (DataRow == null)
+                {
+                    return NotFound();
+                }
+
+                //PopulateOffencesList();
+                ViewBag.OffencesList = GetOffences();
+                ViewBag.Case_Status = GetCaseStatus();
+                GetCurrentIssuedDate(DataRow);
+
+                return View(DataRow);
             }
-
-            //Fetch record
-
-            AddCriminalRec DataRow = _db.CriminalRecords_Table.Find(Id);
-
-            
-
-            if (DataRow == null)
-            { 
-                return NotFound();
+            else
+            {
+                return RedirectToAction("NoEntry", "Home");
             }
-
-            //PopulateOffencesList();
-            ViewBag.OffencesList = GetOffences();
-            ViewBag.Case_Status = GetCaseStatus();  
-            GetCurrentIssuedDate(DataRow);
-
-            return View(DataRow);
         }
 
         [HttpPost]
         public IActionResult Edit(AddCriminalRec obj)
         {
-            // Populate dropdown lists
-            ViewBag.OffencesList = GetOffences();
-            ViewBag.Case_Status = GetCaseStatus();
-            GetCurrentIssuedDate(obj);
-
-            if (ModelState.IsValid)
+            if ((User.IsInRole("Superman") ^ User.IsInRole("Case Manager"))^ User.IsInRole("Station Manager"))
             {
-                // Update Criminal Records Table
-                _db.CriminalRecords_Table.Update(obj);
-                _db.SaveChanges();
+                // Populate dropdown lists
+                ViewBag.OffencesList = GetOffences();
+                ViewBag.Case_Status = GetCaseStatus();
+                GetCurrentIssuedDate(obj);
 
-                // Fetch the user associated with this case
-                var user = _db.Cases_Table.FirstOrDefault(u => u.CriminalRecordId == obj.CriminalRecordId);
-
-                if (user != null)
+                if (ModelState.IsValid)
                 {
-                    // Update the user's case status
-                    user.CaseStatus = obj.Case_Status;  // Assuming CaseStatus is a property in your ApplicationUser model
-
-                    //// Save the changes to the user
-
+                    // Update Criminal Records Table
+                    _db.CriminalRecords_Table.Update(obj);
                     _db.SaveChanges();
-                }
 
-                return RedirectToAction("TableAllSuspects", "NewSuspect");
+                    // Fetch the user associated with this case
+                    var user = _db.Cases_Table.FirstOrDefault(u => u.CriminalRecordId == obj.CriminalRecordId);
+
+                    if (user != null)
+                    {
+                        // Update the user's case status
+                        user.CaseStatus = obj.Case_Status;  // Assuming CaseStatus is a property in your ApplicationUser model
+
+                        //// Save the changes to the user
+
+                        _db.SaveChanges();
+                    }
+
+                    return RedirectToAction("TableAllSuspects", "NewSuspect");
+                }
+                else
+                {
+                    // This is to repopulate the list after an unsuccessful post
+                    ViewBag.OffencesList = GetOffences();
+                    GetCurrentIssuedDate(obj);
+                    TempData["AlertMessage_Edit_Error"] = "Edit Unsuccessful";
+                    return View(obj);
+                }
             }
             else
             {
-                // This is to repopulate the list after an unsuccessful post
-                ViewBag.OffencesList = GetOffences();
-                GetCurrentIssuedDate(obj);
-                TempData["AlertMessage_Edit_Error"] = "Edit Unsuccessful";
-                return View(obj);
-            }
+                return RedirectToAction("NoEntry", "Home");
+            }  
         }
-
-        //[HttpPost]
-        //public IActionResult Edit(AddCriminalRec obj)
-        //{
-        //    //PopulateOffencesList();
-        //    ViewBag.OffencesList = GetOffences();
-        //    ViewBag.Case_Status = GetCaseStatus();
-        //    GetCurrentIssuedDate(obj);
-
-        //    if (ModelState.IsValid)
-        //    {
-        //        //_db.Cases_Table.Update()
-        //        _db.CriminalRecords_Table.Update(obj);
-        //        _db.SaveChanges();
-
-        //        return RedirectToAction("TableAllSuspects", "NewSuspect");
-        //    }
-        //    else
-        //    {
-        //        //This to repopulate the list after an unsuccessful post
-        //        //PopulateOffencesList();
-        //        ViewBag.OffencesList = GetOffences();
-        //        GetCurrentIssuedDate(obj);
-        //        TempData["AlertMessage_Edit_Error"] = "Edit Unsuccessful";
-        //        return View();
-        //    }
-
-        //}
-
 
         private void GetCaseManagerStats()
         {
@@ -368,37 +329,6 @@ namespace SAP.Controllers
                 ViewBag.Open_Cases = 0;
                 ViewBag.Closed_Cases = 0;
             }
-
-
-
-            //// Check if the current user has a role of "Case Manager"
-            //if (User.IsInRole("Case Manager"))
-            //{
-            //    var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-            //    // Find all cases assigned to the current user
-            //    var userCases = _db.Cases_Table.Where(c => c.ManagerId == userId).ToList();
-
-            //    // Total cases assigned to the user
-            //    var Total_Cases = userCases.Count();
-
-            //    // Open cases with status "In-Progress"
-            //    var Open_Cases = userCases.Count(c => c.CaseStatus == "In-Progress");
-
-            //    // Closed cases with status "Closed"
-            //    var Closed_Cases = userCases.Count(c => c.CaseStatus == "Resolved");
-
-            //    // Assign to ViewBag
-            //    ViewBag.Total_Cases = Total_Cases;
-            //    ViewBag.Open_Cases = Open_Cases;
-            //    ViewBag.Closed_Cases = Closed_Cases;
-            //}
-            //else
-            //{
-            //    ViewBag.Total_Cases = 0;
-            //    ViewBag.Open_Cases = 0;
-            //    ViewBag.Closed_Cases = 0;
-            //}
         }
         public List<Cases> GetUserCases()
         {
@@ -410,24 +340,25 @@ namespace SAP.Controllers
                 return userCases;
             }
 
-            return new List<Cases>(); // or handle the case where userId is null appropriately
+            return new List<Cases>();
         }
 
         public IActionResult CaseManagerView() 
         {
-            GetCaseManagerStats();
-            var AssignedCases = GetUserCases();
+            //Return a list of cases a particular managaer is assigned to
+            //Only case Managers have access
+            if (User.IsInRole("Superman") ^ User.IsInRole("Case Manager"))
+            {
+                GetCaseManagerStats();
+                var AssignedCases = GetUserCases();
 
-            return View(AssignedCases);
+                return View(AssignedCases);
+            }
+            else
+            {
+                return RedirectToAction("NoEntry", "Home");
+            }
         }
-
-        public IActionResult StationManagerView()
-        {
-            
-
-            return View();
-        }
-
     }
 }
                               

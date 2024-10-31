@@ -6,6 +6,7 @@ using SAP.Migrations;
 using SAP.Models;
 using System.ComponentModel;
 using System.Dynamic;
+using System.Threading.Tasks;
 
 namespace SAP.Controllers
 {
@@ -19,16 +20,81 @@ namespace SAP.Controllers
 
         public IActionResult Index()
         {
-            //var 
             return View();
         }
 
         //Get all case managers
+        //public IActionResult GetCaseManagers()
+        //{
+        //    //To access the station manager pages
+        //    if (User.IsInRole("Superman") ^ User.IsInRole("Station Manager"))
+        //    {
+        //        var CaseManagers = _db.Users
+        //        .Where(u => u.User_Role == "Case Manager")
+        //        .Select(u => new CaseManagerCasesSM
+        //        {
+        //            ManagerID = u.Id,
+        //            First_Name = u.First_Name,
+        //            Last_Name = u.Last_Name,
+        //            Total_Cases = _db.Cases_Table.Count(c => c.ManagerId == u.Id),
+        //            Open_Cases = _db.Cases_Table.Count(c => c.ManagerId == u.Id && c.CaseStatus == "In-Progress"),
+        //            Closed_Cases = _db.Cases_Table.Count(c => c.ManagerId == u.Id && c.CaseStatus == "Resolved")
+        //        })
+        //        .ToList();
+
+        //        ViewBag.CaseManagers = CaseManagers;
+
+        //        return View();
+        //    }
+        //    else
+        //    {
+        //        return RedirectToAction("NoEntry", "Home");
+        //    }
+        //}
+
+        //The terminate role method
+
+        public IActionResult TerminateManager(string ManagerID)
+        {
+            if (User.IsInRole("Superman") ^ User.IsInRole("Station Manager"))
+            {
+                var manager = _db.Users.FirstOrDefault(u => u.Id == ManagerID);
+                if (manager != null)
+                {
+                    manager.User_Role = "Terminated";
+                    _db.SaveChanges();
+                }
+                return RedirectToAction("GetCaseManagers");
+            }
+            else
+            {
+                return RedirectToAction("NoEntry", "Home");
+            }
+        }
+
+        public IActionResult RestoreManager(string ManagerID)
+        {
+            if (User.IsInRole("Superman") ^ User.IsInRole("Station Manager"))
+            {
+                var manager = _db.Users.FirstOrDefault(u => u.Id == ManagerID);
+                if (manager != null)
+                {
+                    manager.User_Role = "Case Manager";
+                    _db.SaveChanges();
+                }
+                return RedirectToAction("GetCaseManagers");
+            }
+            else
+            {
+                return RedirectToAction("NoEntry", "Home");
+            }
+        }
+
         public IActionResult GetCaseManagers()
         {
-            //var CaseManagers = _db.Users.Count(c => c.User_Role == "Case Manager");
-
-            var CaseManagers = _db.Users
+            if (User.IsInRole("Superman") ^ User.IsInRole("Station Manager"))
+            {
+                var CaseManagers = _db.Users
                 .Where(u => u.User_Role == "Case Manager")
                 .Select(u => new CaseManagerCasesSM
                 {
@@ -40,32 +106,43 @@ namespace SAP.Controllers
                     Closed_Cases = _db.Cases_Table.Count(c => c.ManagerId == u.Id && c.CaseStatus == "Resolved")
                 })
                 .ToList();
-            
-            ViewBag.CaseManagers = CaseManagers;    
-            
-            return View();
+                ViewBag.CaseManagers = CaseManagers;
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("NoEntry", "Home");
+            }
         }
+
+
 
         //Cases per manager
         public IActionResult CasesPerManager(string ManagerID)
         {
-            var Assigned_Cases = _db.Cases_Table
+            if (User.IsInRole("Superman") ^ User.IsInRole("Station Manager"))
+            {
+                var Assigned_Cases = _db.Cases_Table
                                 .Where(u => u.ManagerId == ManagerID)
                                 .Select(u => new CasesPerManagerRecs
                                 {
                                     ManagerIdenti = u.ManagerId,
                                     CriminalRecId = u.CriminalRecordId,
-                                    CriminalIdNum = u.CriminalIdNum, 
+                                    CriminalIdNum = u.CriminalIdNum,
                                     Sentence = u.Sentence,
                                     AssignedTo = u.AssignedTo,
-                                   
-                                });
+                                    CaseStatus = u.CaseStatus
 
-            ViewBag.Assigned_Cases = Assigned_Cases;
-            return View();
+                                }).ToList();
+
+                ViewBag.Assigned_Cases = Assigned_Cases;
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("NoEntry", "Home");
+            } 
         }
-
-
 
         //// Case Manager Action
         //public IActionResult ManageCaseManagerCases()

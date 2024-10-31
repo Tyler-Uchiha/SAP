@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Content Remove="Views\AddCriminalRec\Delete.cshtml" />
+    <Content Remove="Views\Home\NoEntry.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,14 +31,20 @@
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="Views\AddCriminalRec\Delete.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Home\NoEntry.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="Views\AddCriminalRec\Delete.cshtml" />
+    <None Include="Views\Home\NoEntry.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\SAP.Utility\SAP.Utility.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Home\NoEntry.cshtml" />
   </ItemGroup>
 
 </Project>

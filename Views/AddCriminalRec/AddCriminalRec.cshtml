@@ -7,9 +7,12 @@
 </head>
 
 <body>
-    <div class="container border-1 border-dark">
+
+    <h2 class="mt-5">Add criminal record</h2>
+    <hr/>
+    <div class="container" style="margin-left : 15%; margin-top : 5%">
         <form method="post" asp-action="AddCriminalRec">
-            <div class="row-cols mt-3 ms-6 col-md-6 mx-auto">
+            <div class="border p-3 mt-4 w-75 border-1 border-dark">
 
                 <div class="row">
                         <div class="col">
@@ -34,6 +37,7 @@
 
                     <div class="col">
                         <div class="mb-3 col-6 col-3" row>
+                            <label asp-for="IssuedAt" class="my-3"></label>
                             <select asp-for="IssuedAt" type="text" asp-items="@ViewBag.Stations" class=" form-control w-100  border dropdown-toggle border-1 border-dark">
                                 <option>Select Station</option>
                             </select>

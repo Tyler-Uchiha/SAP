@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SAP.Data;
 using SAP.Models;
@@ -19,6 +20,7 @@ namespace SAP.Controllers
         {
             return View();
         }
+        
         private void GetAllCaseStats()
         {
             // Total cases
@@ -52,8 +54,10 @@ namespace SAP.Controllers
 
         public IActionResult Dashboard()
         {
-            GetAllCaseStats();
-   
+            if (User.IsInRole("Superman") ^ User.IsInRole("Admin"))
+            {
+                GetAllCaseStats();
+
                 var offenceStats = _db.Cases_Table
                     .GroupBy(c => c.OffenceCommitted)
                     .Select(g => new OffenceStatViewModel
@@ -75,16 +79,23 @@ namespace SAP.Controllers
                 })
                 .ToList();
 
-            dynamic FlexModel = new ExpandoObject();
+                dynamic FlexModel = new ExpandoObject();
                 FlexModel.Offence_Stats = offenceStats;
                 FlexModel.Case_ManagerS_Stats = caseManagerStats;
 
                 return View(FlexModel);
+            }
+            else
+            {
+                return RedirectToAction("NoEntry", "Home");
+            }
         }
 
         public IActionResult GetCaseManagerStats()
         {
-            var caseManagerStats = _db.Users
+            if (User.IsInRole("Superman") ^ User.IsInRole("Admin"))
+            {
+                var caseManagerStats = _db.Users
                 .Where(u => u.User_Role == "Case Manager")
                 .Select(u => new CaseManagerStats
                 {
@@ -96,9 +107,12 @@ namespace SAP.Controllers
                 })
                 .ToList();
 
-            return View(caseManagerStats);
+                return View(caseManagerStats);
+            }
+            else
+            {
+                return RedirectToAction("NoEntry", "Home");
+            } 
         }
-
-
     }
 }

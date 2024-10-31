@@ -33,8 +33,6 @@ namespace SAP.Models
         [MaxLength(50, ErrorMessage = "Maximum characters reached (50)")]
         public string? IssuedBy { get; set; }
 
-        [Required]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public string? IssueDate { get; set; }
 
         public string? First_Name { get; set; }

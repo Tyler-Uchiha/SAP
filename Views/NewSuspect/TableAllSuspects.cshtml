@@ -10,7 +10,7 @@
         ViewData["Title"] = "All Suspects";
     }
 
-    <h3>@ViewData["Title"]</h3>
+    <h3 class="mx-2">@ViewData["Title"]</h3>
 
     <div>
         @if (TempData["AlertMessage"] != null)
@@ -41,7 +41,7 @@
     </div>
 
     <hr />
-    <a asp-controller="NewSuspect" asp-action="RecordNewSuspect" class="btn btn-dark">Add Suspect</a>
+    <a asp-controller="NewSuspect" asp-action="RecordNewSuspect" class="btn btn-primary mx-2">Add Suspect</a>
     <br />
     <br />
     <form class="container-fluid">

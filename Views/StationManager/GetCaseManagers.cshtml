@@ -1,9 +1,7 @@
 ﻿@{
     var records = ViewBag.CaseManagers as List<CaseManagerCasesSM>;
-}
 
-@{
-    var recordspo = ViewBag.CaseManagers as List<CaseManagerCasesSM>;
+    
 }
 
 <!DOCTYPE html>
@@ -13,10 +11,15 @@
     </head>
 
     <body>
+        <br></br>
+        <h3>Cases Per Manager</h3>
+        <hr/>
+        <br></br>
         <form>
             <table id="dataTable" class="table table-bordered table-responsive table-hover table-striped">
                 <thead>
                     <tr>
+                        <th>Manager ID</th>
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Total Cases</th>
@@ -26,11 +29,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if (Model != null)
+                    @if (records != null)
                     {
                         foreach (var thing in records)
                         {
                             <tr>
+                                <td>@thing.ManagerID</td>
                                 <td>@thing.First_Name</td>
                                 <td>@thing.Last_Name</td>
                                 <td>@thing.Total_Cases</td>
@@ -41,13 +45,12 @@
                                         <a asp-controller="StationManager" asp-action="CasesPerManager" asp-route-ManagerID="@thing.ManagerID" class = "btn btn-primary mx-1"n style="width : 120%">View Cases</a>
 
                                         <br/>
-                                        <a asp-controller="" asp-action="" asp-route-ManagerID="@thing.ManagerID" class="btn btn-danger mx-1">
-                                                Terminate
-                                        </a>
+                                        <a asp-controller="StationManager" asp-action="TerminateManager" asp-route-ManagerID="@thing.ManagerID" class="btn btn-danger mx-1">Terminate</a>
                                         <br/>
-                                        <a asp-controller="" asp-action="" asp-route-ManagerID="@thing.ManagerID" class="btn btn-success">
+           
+                                        @* <a asp-controller="" asp-action="" asp-route-ManagerID="@thing.ManagerID" class="btn btn-success">
                                                 Restore
-                                        </a>
+                                        </a> *@
                                     </div>
                                 </td>
                             </tr>

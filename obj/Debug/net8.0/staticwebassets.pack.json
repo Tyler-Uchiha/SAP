@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\SAP.bundle.scp.css"
     },
     {
+      "Id": "C:\\Users\\taylo\\source\\repos\\SAP\\SAP\\wwwroot\\Pictures\\9412354.jpg",
+      "PackagePath": "staticwebassets\\Pictures\\9412354.jpg"
+    },
+    {
       "Id": "C:\\Users\\taylo\\source\\repos\\SAP\\SAP\\wwwroot\\Pictures\\SAPS_badge.svg.png",
       "PackagePath": "staticwebassets\\Pictures\\SAPS_badge.svg.png"
     },

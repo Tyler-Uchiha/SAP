@@ -8,6 +8,7 @@ using Newtonsoft.Json.Linq;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Dynamic;
 
 namespace SAP.Controllers
 {
@@ -28,6 +29,7 @@ namespace SAP.Controllers
             };
         }
 
+        
         private IEnumerable<SelectListItem> GetDropdownEyes()
         {
             return new List<SelectListItem>
@@ -41,15 +43,24 @@ namespace SAP.Controllers
 
         public IActionResult RecordNewSuspect()
         {
-            ViewBag.Sex = GetDropdownSex();
-            ViewBag.EyeColour = GetDropdownEyes();
+            if (User.IsInRole("Superman") ^ User.IsInRole("Police Officer"))
+            {
+                ViewBag.Sex = GetDropdownSex();
+                ViewBag.EyeColour = GetDropdownEyes();
 
-            return View();
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("NoEntry", "Home");
+            }
         }
 
         [HttpPost]        
         public IActionResult RecordNewSuspect(NewSuspect obj, ListofOffences thing) 
         {
+            
+
             //Repopulate dropdown 
             ViewBag.Sex = GetDropdownSex();
             ViewBag.EyeColour = GetDropdownEyes();
