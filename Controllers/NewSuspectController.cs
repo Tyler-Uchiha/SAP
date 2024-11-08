@@ -170,21 +170,31 @@ namespace SAP.Controllers
         //Edit 
         public IActionResult Edit(int Id)
         {
-            if (Id == null || Id == 0)
+
+            if (User.IsInRole("Superman") ^ User.IsInRole("Case Manager"))
             {
-                return NotFound();
+                if (Id == null || Id == 0)
+                {
+                    return NotFound();
+                }
+
+                //Fetch record
+
+                NewSuspect DataRow = _db.Suspects_Table.Find(Id);
+
+                if (DataRow == null)
+                {
+                    return NotFound();
+                }
+
+                return View(DataRow); 
+            }
+            else
+            {
+                return RedirectToAction("NoEntry", "Home");
             }
 
-            //Fetch record
-
-            NewSuspect DataRow = _db.Suspects_Table.Find(Id);
-
-            if (DataRow == null)
-            {
-                return NotFound();
-            }
-
-            return View(DataRow);
+            
         }
 
         [HttpPost]

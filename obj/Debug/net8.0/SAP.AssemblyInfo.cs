@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SAP")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+343dab71b4ff855c2b4b3c7ff4862a9c263e61b2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+aed0a32f5f75e5c3443d79bb40524879843b8b81")]
 [assembly: System.Reflection.AssemblyProductAttribute("SAP")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SAP")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
